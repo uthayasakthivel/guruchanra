@@ -6,10 +6,16 @@ import AdminDashboard from "./pages/AdminDashboard";
 import EmployeeDashboard from "./pages/EmployeeDashboard";
 import PrivateRoute from "./routes/PrivateRoute";
 import { ToastProvider } from "./components/ToastContext";
-import HomePage from "./pages/HomePage"; // import your separate homepage
+import About from "./pages/About";
+import HomePage from "./pages/HomePage";
+import Services from "./pages/Services";
+import Contact from "./pages/Contact";
 import SignUp from "./pages/SignUp";
 import ForgotPassword from "./pages/ForgotPassword";
 import { useEffect, useState } from "react";
+
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 import Lottie from "lottie-react";
 import loadingSpinner from "./assets/Coin_rotating.json";
@@ -41,6 +47,10 @@ function AppRoutes() {
     <Routes>
       {/* Dummy homepage at "/" */}
       <Route path="/" element={<HomePage />} />
+
+      <Route path="/about" element={<About />} />
+      <Route path="/services" element={<Services />} />
+      <Route path="/contact" element={<Contact />} />
 
       {/* Login page */}
       <Route path="/login" element={<Login />} />
