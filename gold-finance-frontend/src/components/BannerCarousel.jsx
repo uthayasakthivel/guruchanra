@@ -26,22 +26,26 @@ const slides = [
   },
 ];
 
-// // Custom arrow components
-// const Arrow = ({ direction, onClick }) => (
-//   <button
-//     onClick={onClick}
-//     className={`absolute top-1/2 z-10 transform -translate-y-1/2  hover:bg-white text-black p-2 rounded-full ${
-//       direction === "left" ? "left-4" : "right-4"
-//     }`}
-//     aria-label={direction === "left" ? "Previous Slide" : "Next Slide"}
-//   >
-//     {direction === "left" ? (
-//       <ChevronLeftIcon className="w-6 h-6" />
-//     ) : (
-//       <ChevronRightIcon className="w-6 h-6" />
-//     )}
-//   </button>
-// );
+// Custom arrow components
+const Arrow = ({ direction, onClick }) => (
+  <button
+    onClick={onClick}
+    className={`absolute top-1/2 -translate-y-1/2 z-10 
+      bg-white/80 hover:bg-white text-[#1e293b] 
+      w-12 h-12 flex items-center justify-center 
+      rounded-full shadow-md transition 
+      ${
+        direction === "left" ? "2xl:-left-10 left-4" : "2xl:-right-10 right-4"
+      }`}
+    aria-label={direction === "left" ? "Previous Slide" : "Next Slide"}
+  >
+    {direction === "left" ? (
+      <ChevronLeftIcon className="w-6 h-6" />
+    ) : (
+      <ChevronRightIcon className="w-6 h-6" />
+    )}
+  </button>
+);
 
 export default function BannerCarousel() {
   const settings = {
@@ -53,8 +57,8 @@ export default function BannerCarousel() {
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: true,
-    // nextArrow: <Arrow direction="right" />,
-    // prevArrow: <Arrow direction="left" />,
+    nextArrow: <Arrow direction="right" />,
+    prevArrow: <Arrow direction="left" />,
     appendDots: (dots) => (
       <div className="absolute bottom-4 w-full flex justify-center">
         <ul className="flex items-center absolute left-1/2 -top-16 transform -translate-x-1/2">
@@ -68,13 +72,16 @@ export default function BannerCarousel() {
   };
 
   return (
-    <div className="relative w-full max-w-7xl mx-auto px-4 mt-20">
+    <div
+      className="relative w-full max-w-7xl mx-auto mt-25 scroll-mt-36 pt-8 lg:pt-0"
+      id="home"
+    >
       <Slider {...settings}>
         {slides.map((slide, index) => (
           <div key={index}>
             <div className="w-full flex flex-col md:flex-row">
               {/* Left Content */}
-              <div className="flex-1 flex flex-col justify-center p-6 text-left">
+              <div className="flex-1 flex flex-col justify-center p-6 pb-0 md:pl-16 text-left">
                 <p className="text-sm md:text-lg text-gray-500 mb-2">
                   Trusted Gold Solutions Under One Roof
                 </p>
@@ -84,7 +91,7 @@ export default function BannerCarousel() {
                 <p className="text-base md:text-lg text-gray-700 mt-4 whitespace-pre-line max-w-xl leading-relaxed">
                   {slide.subtitle}
                 </p>
-                <div className="mt-6 flex gap-4 flex-wrap">
+                <div className="mt-6 flex gap-4 flex-wrap pb-4 md:pb-0">
                   {/* Call Us Button */}
                   <button className="hover:cursor-pointer hover-bounce-scale px-8 py-3 rounded-full bg-[#f59e0b] hover:bg-[#d97706] text-white font-semibold transition-colors duration-300">
                     Call Us
@@ -97,11 +104,11 @@ export default function BannerCarousel() {
               </div>
 
               {/* Right Image */}
-              <div className="flex-1 flex items-center justify-center p-4">
+              <div className="flex-1 flex items-center justify-center p-4 pb-0">
                 <img
                   src={slide.image}
                   alt="Banner"
-                  className="w-full max-w-[500px] h-auto object-contain"
+                  className="w-full max-w-[500px] h-auto 2xl:max-w-none 2xl:w-auto 2xl:h-auto"
                 />
               </div>
             </div>

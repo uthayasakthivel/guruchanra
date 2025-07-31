@@ -47,10 +47,10 @@ function AppRoutes() {
     <Routes>
       {/* Dummy homepage at "/" */}
       <Route path="/" element={<HomePage />} />
-
+      {/* 
       <Route path="/about" element={<About />} />
       <Route path="/services" element={<Services />} />
-      <Route path="/contact" element={<Contact />} />
+      <Route path="/contact" element={<Contact />} /> */}
 
       {/* Login page */}
       <Route path="/login" element={<Login />} />
