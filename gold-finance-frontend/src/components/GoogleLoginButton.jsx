@@ -34,7 +34,17 @@ export default function GoogleLoginButton() {
           return;
         }
 
-        navigate(data.role === "admin" ? "/admin" : "/employee");
+        // Redirect based on role
+        if (data.role === "admin") {
+          navigate("/admin");
+        } else if (data.role === "manager") {
+          navigate("/manager");
+        } else if (data.role === "employee") {
+          navigate("/employee");
+        } else {
+          showToast("No role assigned. Contact support.", "error");
+          navigate("/");
+        }
         showToast("Login successful!", "success");
       }
     } catch (error) {

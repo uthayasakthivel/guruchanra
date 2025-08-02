@@ -19,6 +19,8 @@ import "slick-carousel/slick/slick-theme.css";
 
 import Lottie from "lottie-react";
 import loadingSpinner from "./assets/Coin_rotating.json";
+import ManagerDashboard from "./pages/ManagerDashboard";
+import BuyingSheet from "./pages/BuyingSheet";
 
 function AppRoutes() {
   const { loading: authLoading } = useAuth();
@@ -71,12 +73,33 @@ function AppRoutes() {
         }
       />
 
+      {/* Manager dashboard protected */}
+      <Route
+        path="/manager"
+        element={
+          <PrivateRoute allowedRoles={["manager"]}>
+            <ManagerDashboard />
+          </PrivateRoute>
+        }
+      />
+
       {/* Employee dashboard protected */}
       <Route
         path="/employee"
         element={
           <PrivateRoute allowedRoles={["employee"]}>
             <EmployeeDashboard />
+          </PrivateRoute>
+        }
+      />
+
+      {/* Buying Sheet route (protected for employee) */}
+
+      <Route
+        path="/buying-sheet"
+        element={
+          <PrivateRoute allowedRoles={["employee"]}>
+            <BuyingSheet />
           </PrivateRoute>
         }
       />

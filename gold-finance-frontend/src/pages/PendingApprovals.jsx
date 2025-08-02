@@ -1,4 +1,3 @@
-// src/components/PendingApprovals.jsx
 import React, { useEffect, useState } from "react";
 import {
   collection,
@@ -12,6 +11,7 @@ import { useToast } from "../components/ToastContext";
 
 export default function PendingApprovals() {
   const [users, setUsers] = useState([]);
+  const [roleSelections, setRoleSelections] = useState({});
   const { showToast } = useToast();
 
   const fetchUsers = async () => {
@@ -22,15 +22,33 @@ export default function PendingApprovals() {
         ...doc.data(),
       }));
       setUsers(allUsers);
+      // Initialize role selections for pending users
+      const pending = allUsers.filter((u) => !u.approved);
+      const roles = {};
+      pending.forEach((u) => {
+        roles[u.id] = u.role || "employee";
+      });
+      setRoleSelections(roles);
     } catch (error) {
       console.error("Error fetching users:", error);
       showToast("Failed to load users.", "error");
     }
   };
 
+  const handleRoleChange = (userId, newRole) => {
+    setRoleSelections((prev) => ({
+      ...prev,
+      [userId]: newRole,
+    }));
+  };
+
   const handleApprove = async (userId) => {
+    const selectedRole = roleSelections[userId] || "employee";
     try {
-      await updateDoc(doc(db, "users", userId), { approved: true });
+      await updateDoc(doc(db, "users", userId), {
+        approved: true,
+        role: selectedRole,
+      });
       showToast("User approved", "success");
       fetchUsers();
     } catch (err) {
@@ -76,7 +94,18 @@ export default function PendingApprovals() {
               {pendingUsers.map((user) => (
                 <tr key={user.id} className="bg-white">
                   <td className="p-2 border">{user.email}</td>
-                  <td className="p-2 border capitalize">{user.role}</td>
+                  <td className="p-2 border capitalize">
+                    <select
+                      value={roleSelections[user.id] || "employee"}
+                      onChange={(e) =>
+                        handleRoleChange(user.id, e.target.value)
+                      }
+                      className="border rounded px-2 py-1"
+                    >
+                      <option value="employee">Employee</option>
+                      <option value="manager">Manager</option>
+                    </select>
+                  </td>
                   <td className="p-2 border">
                     <div className="flex gap-2">
                       <button

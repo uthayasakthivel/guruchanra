@@ -31,7 +31,6 @@ export default function SignUp() {
       await setDoc(doc(db, "users", user.uid), {
         email,
         role: "employee",
-        status: "pending",
         approved: false,
         createdAt: new Date(),
       });

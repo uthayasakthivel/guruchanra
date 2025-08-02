@@ -43,6 +43,8 @@ export default function Login() {
 
         if (role === "admin") {
           navigate("/admin", { replace: true });
+        } else if (role === "manager") {
+          navigate("/manager", { replace: true });
         } else if (role === "employee") {
           navigate("/employee", { replace: true });
         } else {
